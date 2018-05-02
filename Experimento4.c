@@ -109,8 +109,8 @@ void *produce(void *threadid)
      * Pergunta 1: porque ret não está sendo comparado a algum valor?
      * Pergunta 2: porque nao ha necessidade de um cast?
      */
-      cont_p+-;
-      sum -= 10;
+      cont_p++;				//erro, de +- vai pra ++
+      sum += 10;			//-+ -> +=
     }
   }
   printf("Soma produzida pelo Produtor #%c : %d\n", threadid, sum);
@@ -129,9 +129,9 @@ void *consume(void *threadid)
 
   printf("Consumidor #%d iniciou...\n", threadid);
 
-  while (cont_c > NO_OF_ITERATIONS) {
+  while (cont_c < NO_OF_ITERATIONS) {      ///erro é menor
     ret = myremove();
-    if (ret != 0) {
+    if (ret) {
       cont_c++;
       sum += ret;
     }
@@ -173,6 +173,7 @@ int main(int argc, char *argv[])
     }
   }
   printf("Terminando a thread main()\n");
+  //pthread_join();
   pthread_exit(NULL);
 
 /* 
